@@ -1,19 +1,22 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useContext, useRef, useState } from "react";
 import { Button } from "../../Button";
 import { StarRating } from "../../StarRating";
 import "./styles.css";
+import { FeedbackContext } from "../../../context/feedback";
 
-type FeedbackProp = {
+type FeedbackFormProp = {
     title?: string;
 }
 
-export const Feedback = ({title}: FeedbackProp): JSX.Element => {
+export const FeedbackForm = ({title}: FeedbackFormProp): JSX.Element => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [selectedStars, setSelectedStars] = useState(1);
+    const {setFeedback} = useContext(FeedbackContext);
 
     const submit = (e: FormEvent) => {
         e.preventDefault();
         const message = textareaRef.current?.value ?? "";
+        setFeedback({message, rating: selectedStars})
         if (textareaRef.current) {
             textareaRef.current.value = "";
         }
@@ -26,7 +29,7 @@ export const Feedback = ({title}: FeedbackProp): JSX.Element => {
                 <StarRating initialSelectedStars={selectedStars} onChange={(selStrs) => setSelectedStars(selStrs)} />
                 <textarea placeholder="What could we improve?" className="feedback__input" ref={textareaRef} />
             </div>
-            <div className="feedback__submit"><Button onClick={() => {console.log(textareaRef.current?.value)}}>Send</Button></div>
+            <div className="feedback__submit"><Button type="submit">Send</Button></div>
         </form>
     )
 };
