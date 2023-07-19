@@ -1,0 +1,16 @@
+.star-rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 21px;
+}
+
+.star-rating__rating {
+    font-size: 44px;
+    width: 72px;
+}
+
+.star-rating__stars {
+    display: flex;
+    flex-direction: row;
+}
